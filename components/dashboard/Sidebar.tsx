@@ -72,7 +72,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Desktop Sidebar */}
       <div className="hidden lg:block w-64 min-h-screen bg-white">
         <div className="p-6">
-          <nav className="space-y-2">
+          <nav className="space-y-1">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -83,8 +83,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     href={item.href}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
                       isActive
-                        ? "bg-blue-900 text-white"
-                        : "bg-white text-blue-900 hover:bg-blue-100"
+                        ? "bg-sky-950 text-white"
+                        : "bg-white text-sky-950 hover:bg-blue-100"
                     }`}
                   >
                     <Icon className="size-4" />
