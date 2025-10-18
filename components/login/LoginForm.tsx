@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HiEye, HiEyeSlash } from "react-icons/hi2";
 import { z } from "zod";
-import ErrorAlert from "./ErrorAlert";
+import ErrorAlert from "../common/alert/ErrorAlert";
 import TextInput from "@/components/common/input/TextInput";
+import { SolidButton, LinkButton } from "@/components/common/button";
+import { passwordSchema } from "@/lib/validations/password";
 
 // Zod validation schema
 const loginSchema = z.object({
@@ -15,7 +17,7 @@ const loginSchema = z.object({
   password: z
     .string()
     .min(1, "กรุณากรอกรหัสผ่าน")
-    .min(6, "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร"),
+    .and(passwordSchema),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -151,19 +153,27 @@ export default function LoginForm() {
 
       {/* Forgot Password Link */}
       <div className="text-right mb-6">
-        <a href="#" className="text-gray-600 text-sm hover:text-gray-800">
+        <LinkButton 
+          href="/forgot-password" 
+          variant="text"
+          size="sm"
+        >
           ลืมรหัสผ่าน?
-        </a>
+        </LinkButton>
       </div>
 
       {/* Login Button */}
-      <button
+      <SolidButton
         type="submit"
-        disabled={isLoading || !isValid}
-        className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        variant="primary"
+        size="md"
+        fullWidth
+        isLoading={isLoading}
+        loadingText="กำลังเข้าสู่ระบบ..."
+        disabled={!isValid}
       >
-        {isLoading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
-      </button>
+        เข้าสู่ระบบ
+      </SolidButton>
     </form>
   );
 }
