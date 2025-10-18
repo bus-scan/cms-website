@@ -17,7 +17,7 @@ export default function Home() {
     // Only redirect after auth check is complete
     if (!isLoading) {
       if (isAuthenticated) {
-        router.push("/dashboard");
+        router.push("/user/dashboard");
       } else {
         router.push("/login");
       }

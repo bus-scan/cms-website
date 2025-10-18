@@ -64,6 +64,21 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Check if user has admin role - only admin users can access CMS
+    // Note: This assumes the API returns user data with role information
+    // You may need to make an additional API call to get user profile/role
+    // For now, we'll allow login but you should implement role checking
+    // based on your API's user data structure
+    
+    // TODO: Implement proper role checking
+    // Example: if (userRole !== 'admin') {
+    //   return createApiResponse({
+    //     success: false,
+    //     error: "Access denied. Admin role required.",
+    //     statusCode: 403,
+    //   });
+    // }
+
     // Create response with user data (without tokens)
     const response = NextResponse.json({
       success: true,

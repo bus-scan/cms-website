@@ -35,7 +35,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
         <div className="flex justify-end">
           <SolidButton
             onClick={onClose}
-            variant="primary"
+            variant="dark"
             size="md"
           >
             {buttonText}

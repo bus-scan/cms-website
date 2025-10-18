@@ -93,7 +93,7 @@ export default function LoginForm() {
         return;
       }
 
-      router.push("/dashboard");
+      router.push("/user/dashboard");
     } catch (error) {
       console.error("Login error:", error);
 
@@ -165,7 +165,7 @@ export default function LoginForm() {
       {/* Login Button */}
       <SolidButton
         type="submit"
-        variant="primary"
+        variant="dark"
         size="md"
         fullWidth
         isLoading={isLoading}

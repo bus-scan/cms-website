@@ -319,7 +319,7 @@ export default function ResetPasswordForm() {
           {/* Submit Button */}
           <SolidButton
             type="submit"
-            variant="primary"
+            variant="dark"
             size="md"
             fullWidth
             isLoading={isLoading}

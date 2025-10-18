@@ -13,7 +13,7 @@ export default function ForgotPasswordPage() {
   useEffect(() => {
     // If user is already authenticated, redirect to dashboard
     if (isAuthenticated) {
-      router.push("/dashboard");
+      router.push("/user/dashboard");
     }
   }, [isAuthenticated, router]);
 

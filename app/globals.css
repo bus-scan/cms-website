@@ -24,3 +24,31 @@ body {
   color: var(--foreground);
   font-family: var(--font-noto-sans-thai), Arial, Helvetica, sans-serif;
 }
+
+table {
+  @apply min-w-full;
+}
+
+tbody {
+  @apply bg-white;
+}
+
+tbody tr:hover {
+  @apply bg-gray-100;
+}
+
+th {
+  @apply px-6 py-2 text-xs font-medium text-gray-900 uppercase  w-fit;
+}
+
+td {
+  @apply px-6 py-4 text-sm font-medium text-gray-900;
+}
+
+td.rank-cell {
+  @apply text-center whitespace-nowrap;
+}
+
+td.quantity-cell {
+  @apply text-center whitespace-nowrap;
+}

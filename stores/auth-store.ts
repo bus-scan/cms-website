@@ -6,8 +6,15 @@ import type {} from "@redux-devtools/extension";
 interface User {
   id: string;
   email: string;
-  name?: string;
-  role?: string;
+  firstName: string;
+  lastName: string;
+  mobileNo: string;
+  role: string;
+  status: string;
+  emailVerified: boolean;
+  lastLoginAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthState {
@@ -73,6 +80,7 @@ export const useAuthStore = create<AuthState>()(
 
           if (response.ok) {
             const userData = await response.json();
+            console.log("🚀 ~ userData:", userData)
             set({
               isAuthenticated: true,
               user: userData,
