@@ -1,25 +1,14 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "../../components/login/LoginForm";
-import { useAuthStore } from "../../stores/auth-store";
+import { checkAuthentication } from "@/lib/utils/auth";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+export default async function LoginPage() {
+  const isAuthenticated = await checkAuthentication();
 
-  useEffect(() => {
-    // If user is already authenticated, redirect to dashboard
-    if (isAuthenticated) {
-      router.push("/user/dashboard");
-    }
-  }, [isAuthenticated, router]);
-
-  // Show nothing while checking authentication status
+  // If user is already authenticated, redirect to band page
   if (isAuthenticated) {
-    return null;
+    redirect("/user/dashboard");
   }
 
   return (

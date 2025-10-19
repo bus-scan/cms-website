@@ -80,7 +80,6 @@ export const useAuthStore = create<AuthState>()(
 
           if (response.ok) {
             const userData = await response.json();
-            console.log("🚀 ~ userData:", userData)
             set({
               isAuthenticated: true,
               user: userData,

@@ -14,9 +14,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const iconClasses = icon ? (iconPosition === "left" ? "pl-10" : "pr-10") : "";
 
     return (
-      <div className="mb-4">
+      <div className="mb-4 text-sm">
         {label && (
-          <label htmlFor={props.id} className="block text-gray-700 text-sm font-medium mb-2">
+          <label htmlFor={props.id} className="block text-gray-700 font-medium mb-2">
             {label}
           </label>
         )}

@@ -12,6 +12,7 @@ import {
   FiUsers,
   FiClock,
   FiX,
+  FiMusic,
 } from "react-icons/fi";
 
 interface SidebarProps {
@@ -27,9 +28,9 @@ const menuItems = [
     isHeader: true,
   },
   {
-    name: "Brand",
-    href: "/user/brand",
-    icon: FiStar,
+    name: "Band",
+    href: "/user/band",
+    icon: FiMusic,
   },
   {
     name: "Privilege",
