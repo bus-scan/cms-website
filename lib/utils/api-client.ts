@@ -7,10 +7,7 @@ interface ApiError {
   statusCode?: number;
 }
 
-interface ApiClientOptions {
-  timeout?: number;
-  headers?: Record<string, string>;
-}
+// Removed unused interface
 
 /**
  * Utility function to call external APIs with proper error handling and timeout
@@ -19,13 +16,13 @@ export async function callExternalApi(
   url: string,
   options: {
     method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-    body?: any;
+    body?: unknown;
     headers?: Record<string, string>;
     timeout?: number;
   } = {}
 ): Promise<{
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: string;
   statusCode?: number;
 }> {
@@ -51,11 +48,11 @@ export async function callExternalApi(
       clearTimeout(timeoutId);
 
       // Parse response
-      let data: any;
+      let data: unknown;
       try {
         data = await response.json();
-      } catch (parseError) {
-        console.error("Failed to parse API response:", parseError);
+      } catch (_parseError) {
+        console.error("Failed to parse API response:", _parseError);
         return {
           success: false,
           error: "Invalid response from external service",
@@ -127,7 +124,7 @@ export async function callExternalApi(
  */
 export function createApiResponse(result: {
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: string;
   statusCode?: number;
 }): NextResponse {
@@ -149,13 +146,13 @@ export function createApiResponse(result: {
  */
 export async function parseRequestBody(request: NextRequest): Promise<{
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: string;
 }> {
   try {
     const body = await request.json();
     return { success: true, data: body };
-  } catch (parseError) {
+  } catch {
     return {
       success: false,
       error: "Invalid JSON in request body",
@@ -168,11 +165,7 @@ export async function parseRequestBody(request: NextRequest): Promise<{
  */
 export async function refreshAccessToken(refreshToken: string): Promise<{
   success: boolean;
-  data?: {
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
-  };
+  data?: unknown;
   error?: string;
   statusCode?: number;
 }> {
@@ -219,14 +212,14 @@ export async function callApiWithRefresh(
   url: string,
   options: {
     method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-    body?: any;
+    body?: unknown;
     headers?: Record<string, string>;
     timeout?: number;
   } = {},
   refreshToken?: string
 ): Promise<{
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: string;
   statusCode?: number;
   newTokens?: {
@@ -248,13 +241,13 @@ export async function callApiWithRefresh(
         ...options,
         headers: {
           ...options.headers,
-          Authorization: `Bearer ${refreshResult.data.accessToken}`,
+          Authorization: `Bearer ${(refreshResult.data as { accessToken: string }).accessToken}`,
         },
       });
 
       return {
         ...retryResult,
-        newTokens: refreshResult.data,
+        newTokens: refreshResult.data as { accessToken: string; refreshToken: string; expiresIn: number },
       };
     }
   }
@@ -270,7 +263,7 @@ export async function callApiWithRefreshAndResponse(
   url: string,
   options: {
     method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-    body?: any;
+    body?: unknown;
     headers?: Record<string, string>;
     timeout?: number;
   } = {},

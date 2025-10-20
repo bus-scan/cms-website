@@ -1,20 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { callApiWithRefreshAndResponse } from "@/lib/utils/api-client";
 
-// Types
-interface UserResponse {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  mobileNo: string | null;
-  role: string;
-  status: string;
-  emailVerified: boolean;
-  lastLoginAt: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// Types removed as they are not used
 
 export async function GET(request: NextRequest) {
   // Get tokens from HTTP-only cookies

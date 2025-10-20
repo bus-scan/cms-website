@@ -11,10 +11,7 @@ interface ResetPasswordRequest {
   newPassword: string;
 }
 
-interface ResetPasswordResponse {
-  message: string;
-  success: boolean;
-}
+// Removed unused interface
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,7 +21,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parseResult.error }, { status: 400 });
     }
 
-    const { token, newPassword }: ResetPasswordRequest = parseResult.data;
+    const { token, newPassword } = parseResult.data as ResetPasswordRequest;
 
     // Call the external API
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;

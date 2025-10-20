@@ -1,5 +1,5 @@
 import { forwardRef, useState, useRef, useEffect } from "react";
-import { HiMagnifyingGlass, HiXMark, HiChevronDown } from "react-icons/hi2";
+import { HiXMark, HiChevronDown } from "react-icons/hi2";
 
 interface SelectOption {
   value: string;

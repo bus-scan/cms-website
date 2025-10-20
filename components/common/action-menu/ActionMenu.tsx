@@ -25,7 +25,7 @@ interface ActionMenuProps {
 
 export default function ActionMenu({
   items,
-  itemId,
+  itemId: _itemId,
   className = "",
   buttonClassName = "text-gray-400 hover:text-gray-600",
   menuClassName = "",
@@ -41,7 +41,7 @@ export default function ActionMenu({
 
   // Close menu when clicking outside or scrolling
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = () => {
       if (isOpen) {
         setIsOpen(false);
         setMenuPosition(null);

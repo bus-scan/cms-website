@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { token, password } = bodyResult.data;
+  const { token, password } = bodyResult.data as { token: string; password: string };
 
   // Validate required fields
   if (!token || !password) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ResetPasswordForm from "../../components/reset-password/ResetPasswordForm";
@@ -55,7 +55,9 @@ export default function ResetPasswordPage() {
           </div>
 
           {/* Reset Password Form */}
-          <ResetPasswordForm />
+          <Suspense fallback={<div className="text-center">Loading...</div>}>
+            <ResetPasswordForm />
+          </Suspense>
         </div>
       </div>
     </div>

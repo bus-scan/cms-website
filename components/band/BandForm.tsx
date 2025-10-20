@@ -8,7 +8,7 @@ import TextInput from "@/components/common/input/TextInput";
 import { SolidButton } from "@/components/common/button";
 import { ImageUpload } from "@/components/common/uploader";
 import Toggle from "@/components/common/toggle/Toggle";
-import { BandFormData, FileUploadResponse } from "@/lib/types/band";
+import { BandFormData } from "@/lib/types/band";
 import { bandService } from "@/lib/services/band-service";
 import { fileService } from "@/lib/services/file-service";
 
@@ -124,7 +124,7 @@ export default function BandForm({
     return () => clearTimeout(timeoutId);
   }, [watchedBandName, checkNameExists]);
 
-  const handleFormSubmit = async (data: any) => {
+  const handleFormSubmit = async (data: { bandName: string; imageFile: File | null; isActive: boolean }) => {
     let imageId = initialData?.imageId || "";
     let imagePublicUrl = initialData?.imagePublicUrl;
 

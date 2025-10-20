@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { email }: ForgotPasswordRequest = parseResult.data;
+    const { email } = parseResult.data as ForgotPasswordRequest;
 
     // Validate email
     if (!email || typeof email !== "string") {
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Success response
-    const otpResponse: OtpResponse = result.data;
+    const otpResponse = result.data as OtpResponse;
     return NextResponse.json(otpResponse, { status: 200 });
 
   } catch (error) {

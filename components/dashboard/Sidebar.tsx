@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   FiBarChart,
-  FiStar,
   FiHeart,
   FiCalendar,
   FiList,
@@ -74,7 +73,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <div className="hidden lg:block w-64 min-h-screen bg-white">
         <div className="p-6">
           <nav className="space-y-1">
-            {menuItems.map((item, index) => {
+            {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
 
@@ -120,7 +119,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         <div className="px-6 pb-6">
           <nav className="space-y-2">
-            {menuItems.map((item, index) => {
+            {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
 

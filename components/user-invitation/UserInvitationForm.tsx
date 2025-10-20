@@ -10,7 +10,7 @@ import TextInput from "@/components/common/input/TextInput";
 import { SolidButton, LinkButton } from "@/components/common/button";
 import SuccessModal from "../common/modal/SuccessModal";
 import ErrorAlert from "../common/alert/ErrorAlert";
-import { passwordSchema, getPasswordRequirements, PasswordRequirement } from "@/lib/validations/password";
+import { passwordSchema, getPasswordRequirements } from "@/lib/validations/password";
 
 // Zod validation schema
 const setupPasswordSchema = z.object({

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { HiMagnifyingGlass, HiEye, HiTrash, HiPencil } from "react-icons/hi2";
 import { LinkButton } from "@/components/common/button";
 import { StatusText } from "@/components/common/text";
 import { Toggle } from "@/components/common/toggle";
 import TextInput from "@/components/common/input/TextInput";
 import { Select } from "@/components/common/select";
-import { ActionMenu, ActionMenuItem } from "@/components/common/action-menu";
+import { ActionMenu } from "@/components/common/action-menu";
 import { ConfirmModal, SuccessModal } from "@/components/common/modal";
 import { bandService } from "@/lib/services/band-service";
 import { Band, SearchBandParams } from "@/lib/types/band";
@@ -33,7 +33,7 @@ export default function BandList() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Load bands
-  const loadBands = async () => {
+  const loadBands = useCallback(async () => {
     try {
       setLoading(true);
       const params: SearchBandParams = {
@@ -58,13 +58,13 @@ export default function BandList() {
         setErrorMessage(response.error || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
         setShowError(true);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage("เกิดข้อผิดพลาดในการโหลดข้อมูล");
       setShowError(true);
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, rowsPerPage, searchTerm, statusFilter]);
 
   // Search handler with debouncing
   useEffect(() => {
@@ -74,12 +74,12 @@ export default function BandList() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [searchTerm, statusFilter, rowsPerPage]);
+  }, [searchTerm, statusFilter, rowsPerPage, loadBands]);
 
   // Load bands when page changes
   useEffect(() => {
     loadBands();
-  }, [currentPage]);
+  }, [currentPage, loadBands]);
 
   // Handle delete band
   const handleDeleteBand = async () => {
@@ -99,7 +99,7 @@ export default function BandList() {
         setShowError(true);
         setShowDeleteModal(false);
       }
-    } catch (error) {
+    } catch {
       setErrorMessage("เกิดข้อผิดพลาดในการลบข้อมูล");
       setShowError(true);
       setShowDeleteModal(false);
@@ -286,7 +286,7 @@ export default function BandList() {
         title="ยืนยันการลบ"
         message={
           <p>
-            คุณแน่ใจหรือไม่ที่ต้องการลบ "{bandToDelete?.bandName}"? <br />
+            คุณแน่ใจหรือไม่ที่ต้องการลบ &quot;{bandToDelete?.bandName}&quot;? <br />
             การดำเนินการนี้ไม่สามารถยกเลิกได้
           </p>
         }

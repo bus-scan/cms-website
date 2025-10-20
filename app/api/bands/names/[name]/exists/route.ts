@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { callExternalApi, createApiResponse } from "@/lib/utils/api-client";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;

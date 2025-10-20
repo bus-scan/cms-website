@@ -12,7 +12,7 @@ export default function UserLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { isAuthenticated, user, logout, isLoading, checkAuthStatus } = useAuthStore();
+  const { isAuthenticated, isLoading, checkAuthStatus } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {

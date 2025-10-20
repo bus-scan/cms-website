@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { HiCloudArrowUp } from "react-icons/hi2";
 
 interface ImageUploadProps {

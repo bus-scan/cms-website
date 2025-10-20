@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import UserInvitationForm from "../../components/user-invitation/UserInvitationForm";
@@ -55,7 +55,9 @@ export default function UserInvitationPage() {
           </div>
 
           {/* User Invitation Form */}
-          <UserInvitationForm />
+          <Suspense fallback={<div className="text-center">Loading...</div>}>
+            <UserInvitationForm />
+          </Suspense>
         </div>
       </div>
     </div>

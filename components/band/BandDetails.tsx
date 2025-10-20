@@ -127,7 +127,7 @@ export default function BandDetails({ band, onDelete }: BandDetailsProps) {
         title="ยืนยันการลบ"
         message={
           <p>
-            คุณแน่ใจหรือไม่ที่ต้องการลบ "{band.bandName}"? <br />
+            คุณแน่ใจหรือไม่ที่ต้องการลบ &quot;{band.bandName}&quot;? <br />
             การดำเนินการนี้ไม่สามารถยกเลิกได้
           </p>
         }

@@ -1,4 +1,4 @@
-import { HiExclamationTriangle, HiXCircle } from "react-icons/hi2";
+import { HiXCircle } from "react-icons/hi2";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 
 interface ErrorAlertProps {

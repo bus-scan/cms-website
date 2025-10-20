@@ -1,16 +1,16 @@
 "use client";
 
-import { useAuthStore } from "@/stores/auth-store";
+// Removed unused import
 import Link from "next/link";
 import Image from "next/image";
-import { FiSettings, FiPlus, FiUser, FiMenu } from "react-icons/fi";
+import { FiSettings, FiMenu } from "react-icons/fi";
 
 interface TopBarProps {
   onMenuToggle: () => void;
 }
 
 export default function TopBar({ onMenuToggle }: TopBarProps) {
-  const { user } = useAuthStore();
+  // Removed unused user variable
 
   return (
     <header className="bg-white text-white">

@@ -31,7 +31,7 @@ export default function ForgotPasswordForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [otpResponse, setOtpResponse] = useState<OtpResponse | null>(null);
+  const [_otpResponse, setOtpResponse] = useState<OtpResponse | null>(null);
 
   const {
     register,

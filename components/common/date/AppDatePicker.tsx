@@ -29,7 +29,7 @@ interface AppDatePickerProps {
   size?: "sm" | "md" | "lg";
 }
 
-const AppDatePicker = forwardRef<any, AppDatePickerProps>(
+const AppDatePicker = forwardRef<unknown, AppDatePickerProps>(
   (
     {
       selected,
@@ -51,7 +51,7 @@ const AppDatePicker = forwardRef<any, AppDatePickerProps>(
       size = "md",
       ...props
     },
-    ref
+    _ref
   ) => {
     const getVariantStyles = () => {
       switch (variant) {
@@ -89,7 +89,6 @@ const AppDatePicker = forwardRef<any, AppDatePickerProps>(
 
     return (
       <DatePicker
-        ref={ref}
         selected={selected}
         onChange={onChange}
         placeholderText={placeholderText}
