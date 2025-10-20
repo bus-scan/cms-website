@@ -6,7 +6,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 // GET /api/bands/[id] - Get band by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     if (!baseUrl) {
@@ -17,7 +17,7 @@ export async function GET(
       });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Get access token from cookie
     const accessToken = request.cookies.get('accessToken')?.value;
@@ -51,7 +51,7 @@ export async function GET(
 // PUT /api/bands/[id] - Update band (full update)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     if (!baseUrl) {
@@ -62,7 +62,7 @@ export async function PUT(
       });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const parseResult = await parseRequestBody(request);
     
     if (!parseResult.success) {
@@ -107,7 +107,7 @@ export async function PUT(
 // PATCH /api/bands/[id] - Partial update band
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     if (!baseUrl) {
@@ -118,7 +118,7 @@ export async function PATCH(
       });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const parseResult = await parseRequestBody(request);
     
     if (!parseResult.success) {
@@ -163,7 +163,7 @@ export async function PATCH(
 // DELETE /api/bands/[id] - Delete band
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     if (!baseUrl) {
@@ -174,7 +174,7 @@ export async function DELETE(
       });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Get access token from cookie
     const accessToken = request.cookies.get('accessToken')?.value;

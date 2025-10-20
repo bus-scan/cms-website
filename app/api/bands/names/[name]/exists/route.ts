@@ -6,7 +6,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 // GET /api/bands/names/[name]/exists - Check if band name exists
 export async function GET(
   request: NextRequest,
-  { params }: { params: { name: string } }
+  { params }: { params: Promise<{ name: string }> }
 ) {
   try {
     if (!baseUrl) {
@@ -17,7 +17,7 @@ export async function GET(
       });
     }
 
-    const { name } = params;
+    const { name } = await params;
     const decodedName = decodeURIComponent(name);
 
     // Get access token from cookie
