@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { checkAuthentication } from "@/lib/utils/auth";
+import { checkAuthentication } from "@/lib/utils/server";
 
 export default async function Home() {
   const isAuthenticated = await checkAuthentication();

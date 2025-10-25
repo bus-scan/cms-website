@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useDebounce } from "@/lib/utils";
 import { HiMagnifyingGlass, HiEye, HiTrash, HiPencil } from "react-icons/hi2";
 import { LinkButton } from "@/components/common/button";
 import { StatusText } from "@/components/common/text";
@@ -32,6 +33,9 @@ export default function BandList() {
   const [bandToDelete, setBandToDelete] = useState<Band | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Debounced search term
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   // Load bands
   const loadBands = useCallback(async () => {
     try {
@@ -41,8 +45,8 @@ export default function BandList() {
         limit: rowsPerPage,
       };
 
-      if (searchTerm) {
-        params.search = searchTerm;
+      if (debouncedSearchTerm) {
+        params.search = debouncedSearchTerm;
       }
       if (statusFilter) {
         params.isActive = statusFilter === "active";
@@ -64,22 +68,17 @@ export default function BandList() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, rowsPerPage, searchTerm, statusFilter]);
+  }, [currentPage, rowsPerPage, debouncedSearchTerm, statusFilter]);
 
-  // Search handler with debouncing
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentPage(1); // Reset to first page when searching
-      loadBands();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, statusFilter, rowsPerPage, loadBands]);
-
-  // Load bands when page changes
+  // Load bands when search parameters or page changes
   useEffect(() => {
     loadBands();
-  }, [currentPage, loadBands]);
+  }, [loadBands]);
+
+  // Reset to first page when search parameters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm, statusFilter, rowsPerPage]);
 
   // Handle delete band
   const handleDeleteBand = async () => {
@@ -214,8 +213,12 @@ export default function BandList() {
                         {band.bandName}
                       </LinkButton>
                     </td>
-                    <td className="md:table-cell hidden">{formatDate(band.createdAt)}</td>
-                    <td className="md:table-cell hidden">{formatDate(band.updatedAt)}</td>
+                    <td className="md:table-cell hidden">
+                      {formatDate(band.createdAt)}
+                    </td>
+                    <td className="md:table-cell hidden">
+                      {formatDate(band.updatedAt)}
+                    </td>
                     <td>
                       <div className="flex justify-center items-center">
                         <StatusText isActive={band.isActive} />
@@ -286,7 +289,8 @@ export default function BandList() {
         title="ยืนยันการลบ"
         message={
           <p>
-            คุณแน่ใจหรือไม่ที่ต้องการลบ &quot;{bandToDelete?.bandName}&quot;? <br />
+            คุณแน่ใจหรือไม่ที่ต้องการลบ &quot;{bandToDelete?.bandName}&quot;?{" "}
+            <br />
             การดำเนินการนี้ไม่สามารถยกเลิกได้
           </p>
         }

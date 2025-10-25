@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useDebounce } from "@/lib/utils";
 import { HiMagnifyingGlass, HiEye, HiTrash, HiPencil } from "react-icons/hi2";
 import { LinkButton } from "@/components/common/button";
 import { StatusText } from "@/components/common/text";
@@ -34,6 +35,9 @@ export default function PrivilegeList() {
   const [privilegeToDelete, setPrivilegeToDelete] = useState<Privilege | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Debounced search term
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   // Load privileges
   const loadPrivileges = useCallback(async () => {
     try {
@@ -43,8 +47,8 @@ export default function PrivilegeList() {
         limit: rowsPerPage,
       };
 
-      if (searchTerm) {
-        params.search = searchTerm;
+      if (debouncedSearchTerm) {
+        params.search = debouncedSearchTerm;
       }
       if (typeFilter) {
         params.type = typeFilter as PrivilegeType;
@@ -69,22 +73,17 @@ export default function PrivilegeList() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, rowsPerPage, searchTerm, typeFilter, statusFilter]);
+  }, [currentPage, rowsPerPage, debouncedSearchTerm, typeFilter, statusFilter]);
 
-  // Search handler with debouncing
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentPage(1); // Reset to first page when searching
-      loadPrivileges();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [searchTerm, typeFilter, statusFilter, rowsPerPage, loadPrivileges]);
-
-  // Load privileges when page changes
+  // Load privileges when search parameters or page changes
   useEffect(() => {
     loadPrivileges();
-  }, [currentPage, loadPrivileges]);
+  }, [loadPrivileges]);
+
+  // Reset to first page when search parameters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm, typeFilter, statusFilter, rowsPerPage]);
 
   // Handle delete privilege
   const handleDeletePrivilege = async () => {

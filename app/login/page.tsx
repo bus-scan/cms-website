@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "../../components/login/LoginForm";
-import { checkAuthentication } from "@/lib/utils/auth";
+import { checkAuthentication } from "@/lib/utils/server";
 
 export default async function LoginPage() {
   const isAuthenticated = await checkAuthentication();
