@@ -31,7 +31,7 @@ export default function ViewPrivilegePage() {
           activeTab={activeTab}
           onTabChange={setActiveTab}
           tabs={tabs}
-          children={{
+          tabContent={{
             privilege: <PrivilegeDetails privilegeId={id} />,
             "history-log": <HistoryLogTable privilegeId={id} />,
           }}

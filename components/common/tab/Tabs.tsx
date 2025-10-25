@@ -11,14 +11,14 @@ interface TabsProps<T extends string = string> {
   activeTab: T;
   onTabChange: (tab: T) => void;
   tabs: TabOption<T>[];
-  children?: Record<T, React.ReactNode>;
+  tabContent?: Record<T, React.ReactNode>;
 }
 
 export default function Tabs<T extends string = string>({
   activeTab,
   onTabChange,
   tabs,
-  children,
+  tabContent,
 }: TabsProps<T>) {
   return (
     <>
@@ -37,7 +37,7 @@ export default function Tabs<T extends string = string>({
           </button>
         ))}
       </div>
-      {children && activeTab in children && children[activeTab]}
+      {tabContent && activeTab in tabContent && tabContent[activeTab]}
     </>
   );
 }

@@ -32,7 +32,7 @@ const privilegeFormSchema = z.object({
     .max(2000, "Condition ต้องไม่เกิน 2000 ตัวอักษร")
     .optional(),
   type: z.nativeEnum(PrivilegeType, {
-    errorMap: () => ({ message: "กรุณาเลือกประเภท" }),
+    message: "กรุณาเลือกประเภท",
   }),
   imageFile: z
     .any()
@@ -40,7 +40,7 @@ const privilegeFormSchema = z.object({
       message: "กรุณาอัปโหลดรูปภาพ",
     }),
   status: z.nativeEnum(PrivilegeStatus, {
-    errorMap: () => ({ message: "กรุณาเลือกสถานะ" }),
+    message: "กรุณาเลือกสถานะ",
   }),
 });
 
