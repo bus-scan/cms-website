@@ -14,10 +14,7 @@ import { passwordSchema } from "@/lib/validations/password";
 // Zod validation schema
 const loginSchema = z.object({
   email: z.string().min(1, "กรุณากรอกอีเมล").email("รูปแบบอีเมลไม่ถูกต้อง"),
-  password: z
-    .string()
-    .min(1, "กรุณากรอกรหัสผ่าน")
-    .and(passwordSchema),
+  password: z.string().min(1, "กรุณากรอกรหัสผ่าน").and(passwordSchema),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -153,11 +150,7 @@ export default function LoginForm() {
 
       {/* Forgot Password Link */}
       <div className="text-right mb-6">
-        <LinkButton 
-          href="/forgot-password" 
-          variant="text"
-          size="sm"
-        >
+        <LinkButton href="/forgot-password" variant="text" size="sm">
           ลืมรหัสผ่าน?
         </LinkButton>
       </div>

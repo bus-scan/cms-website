@@ -17,30 +17,57 @@ interface User {
   updatedAt: string;
 }
 
-interface AuthState {
-  isAuthenticated: boolean;
-  isLoading: boolean;
+interface UserState {
   user: User | null;
-  login: (user: User) => void;
-  logout: () => void;
+  isLoading: boolean;
+  setUser: (user: User | null) => void;
   setLoading: (loading: boolean) => void;
-  setUser: (user: User) => void;
-  checkAuthStatus: () => Promise<void>;
+  fetchUser: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useUserStore = create<UserState>()(
   devtools(
-    (set, get) => ({
-      isAuthenticated: false,
-      isLoading: false,
+    (set) => ({
       user: null,
+      isLoading: false,
 
-      login: (user: User) => {
-        set({
-          isAuthenticated: true,
-          user,
-          isLoading: false,
-        });
+      setUser: (user: User | null) => {
+        set({ user });
+      },
+
+      setLoading: (loading: boolean) => {
+        set({ isLoading: loading });
+      },
+
+      fetchUser: async () => {
+        set({ isLoading: true });
+        
+        try {
+          const response = await fetch("/api/auth/me", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            const userData = await response.json();
+            set({
+              user: userData,
+              isLoading: false,
+            });
+          } else {
+            set({
+              user: null,
+              isLoading: false,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          set({
+            user: null,
+            isLoading: false,
+          });
+        }
       },
 
       logout: async () => {
@@ -55,52 +82,13 @@ export const useAuthStore = create<AuthState>()(
         }
 
         set({
-          isAuthenticated: false,
           user: null,
           isLoading: false,
         });
       },
-
-      setLoading: (loading: boolean) => {
-        set({ isLoading: loading });
-      },
-
-      setUser: (user: User) => {
-        set({ user });
-      },
-
-      checkAuthStatus: async () => {
-        set({ isLoading: true });
-        
-        try {
-          const response = await fetch("/api/auth/me", {
-            method: "GET",
-            credentials: "include",
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            set({
-              isAuthenticated: true,
-              user: userData,
-              isLoading: false,
-            });
-          } else {
-            set({
-              isAuthenticated: false,
-              user: null,
-              isLoading: false,
-            });
-          }
-        } catch (error) {
-          console.error("Error checking auth status:", error);
-          set({
-            isAuthenticated: false,
-            user: null,
-            isLoading: false,
-          });
-        }
-      },
     })
   )
 );
+
+// Keep the old export for backward compatibility during transition
+export const useAuthStore = useUserStore;

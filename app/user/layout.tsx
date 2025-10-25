@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/stores/auth-store";
+import { useUserStore } from "@/stores/user-store";
 import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 
@@ -11,23 +10,16 @@ export default function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-  const { isAuthenticated, isLoading, checkAuthStatus } = useAuthStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { fetchUser, isLoading } = useUserStore();
 
   useEffect(() => {
-    // Check authentication status on component mount
-    checkAuthStatus();
-  }, [checkAuthStatus]);
+    // Fetch user data when layout mounts
+    // This ensures user data is available in all user pages
+    fetchUser();
+  }, [fetchUser]);
 
-  useEffect(() => {
-    // If user is not authenticated after loading, redirect to login
-    if (!isLoading && !isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isAuthenticated, isLoading, router]);
-
-  // Show loading while checking authentication
+  // Show loading while fetching user data
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -37,11 +29,6 @@ export default function UserLayout({
         </div>
       </div>
     );
-  }
-
-  // Show nothing if not authenticated (will redirect)
-  if (!isAuthenticated) {
-    return null;
   }
 
   return (

@@ -1,29 +1,20 @@
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import LoginForm from "../../components/login/LoginForm";
-import { checkAuthentication } from "@/lib/utils/server";
 
-export default async function LoginPage() {
-  const isAuthenticated = await checkAuthentication();
-
-  // If user is already authenticated, redirect to band page
-  if (isAuthenticated) {
-    redirect("/user/dashboard");
-  }
-
+export default function LoginPage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center bg-gray-100">
       {/* Background Pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-30"
         style={{
           backgroundImage: 'url("/login_bg.png")',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
-      
+
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md mx-4">
         <div className="bg-white rounded-lg shadow-lg p-8">
