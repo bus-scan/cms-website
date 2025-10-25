@@ -1,27 +1,8 @@
-"use client";
-
-import { useEffect, Suspense } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 import Image from "next/image";
 import UserInvitationForm from "../../components/user-invitation/UserInvitationForm";
-import { useAuthStore } from "../../stores/auth-store";
 
 export default function UserInvitationPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
-
-  useEffect(() => {
-    // If user is already authenticated, redirect to dashboard
-    if (isAuthenticated) {
-      router.push("/user/dashboard");
-    }
-  }, [isAuthenticated, router]);
-
-  // Show nothing while checking authentication status
-  if (isAuthenticated) {
-    return null;
-  }
-
   return (
     <div className="min-h-screen relative flex items-center justify-center bg-gray-100">
       {/* Background Pattern */}
